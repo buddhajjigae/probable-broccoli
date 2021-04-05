@@ -1,1 +1,0 @@
-module.exports.COOKIE_KEY = 'goobly-woobly';
