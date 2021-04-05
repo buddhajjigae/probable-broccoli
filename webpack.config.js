@@ -42,4 +42,8 @@ module.exports = {
       template: 'client/index.html',
     }),
   ],
+  resolve: {
+    // Enable importing JS / JSX files without specifying their extension
+    extensions: ['.js', '.jsx'],
+  },
 };

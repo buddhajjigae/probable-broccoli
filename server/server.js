@@ -43,7 +43,7 @@ app.use(cookieSession({
  * try incorporating bcrypt in the model file and have the hashed user id column contain the value
  * returned by bcrypt.hash(); 
  */
- app.get('/login', async (req,res) => { // not the async before (req, res) since bcrpyt is async. this also allows us to use await before bcrypt to get the hash before proceeding.
+ app.get('/login', async (req,res) => { // note the async before (req, res) since bcrpyt is async. this also allows us to use await before bcrypt to get the hash before proceeding.
   // first get user id from the database, this will replace the BCRYPT_TEST_ID value
 
   // hash the user id
@@ -96,6 +96,7 @@ app.get('/comparecookie', async (req, res) => {
  */
 app.use('/wardrobe', wardrobeRouter);
 app.use('/outfits', outfitsRouter);
+
 
 //catch-all error handler for unknown routes
 app.use('*',(req, res) => res.status(404).send('not working'));
