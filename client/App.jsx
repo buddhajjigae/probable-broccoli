@@ -8,7 +8,7 @@
 // - Displays main container (that displays category buttons)
 // - Displays welcome title with the user name
 
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import ReactDOM from "react-dom";
 import MainContainer from "./components/MainContainer";
 
@@ -17,24 +17,18 @@ class App extends Component {
   constructor(props) {
     super();
     this.state = {
-      userId : 'asefjowef83r8',
-      userName : 'Kirsten PeterShark'
+      userId: 'asefjowef83r8',
+      userName: 'Kirsten Petersharky'
     }
   }
-
-  componentDidMount() {
-    // fetch('/')
-    // .then(res => res.json())
-    // .catch(err => console.log('ERROR ', err));
-  }
-
- //<MainContainer userId="asefjowef83r8" userName="Goobly Shark" />
+  
+  //<MainContainer userId="asefjowef83r8" userName="Goobly Shark" />
   render() {
     return (
       <div>
         <h1>Goblin Shark(coming from App.jsx)</h1>
         <p>Welcome {this.state.userName}</p>
-        <MainContainer userId={this.state.userId} userName={this.state.userName} />    
+        <MainContainer userId={this.state.userId} userName={this.state.userName} />
       </div>
     );
   }

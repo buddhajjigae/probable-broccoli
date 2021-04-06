@@ -30,7 +30,6 @@ wardrobeController.getItemByType = (req, res, next) => {
 
 // POST an item to clothing_item table
 wardrobeController.addItem = (req, res, next) => {
-	console.log("HERE");
 	const { url, type, user_id } = req.body;
 	const queryString = `INSERT INTO clothing_item(url, type, user_id)
   VALUES('${url}', '${type}', ${user_id})`;

@@ -18,6 +18,8 @@ module.exports = {
       '/wardrobe':'http://localhost:3000/',
       '/wardrobe/getItems':'http://localhost:3000/',
       '/outfits':'http://localhost:3000/',
+      '/users':'http://localhost:3000/',
+      '/login/:username/:password':'http://localhost:3000/',
     },
   },
   module: {

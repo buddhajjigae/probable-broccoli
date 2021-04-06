@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+const SALT_WORK_FACTOR = 5;
+const bcrypt = require('bcryptjs');
 
 // cookie-session for creating sessions stored in cookies
 const cookieSession = require('cookie-session');
@@ -8,12 +10,15 @@ const cookieSession = require('cookie-session');
 const keys = require('../keys/keys');
 
 // for bcrypt testing purposes
+/*
 const SALT_WORK_FACTOR = 5;
 const bcrypt = require('bcryptjs');
-const BCRYPT_TEST_ID = 'Senor Goobly';
+const BCRYPT_TEST_ID = 'Senor Goobly';*/
 const wardrobeRouter = require('./routes/wardrobeRoute');
 const outfitsRouter = require('./routes/outfitsRoute');
-
+const userRouter = require('./routes/userRoute');
+const loginRouter = require('./routes/loginRoute');
+const logoutRouter = require('./routes/logoutRoute')
 const PORT = 3000;
 
 /**
@@ -44,7 +49,10 @@ app.use(
  * try incorporating bcrypt in the model file and have the hashed user id column contain the value
  * returned by bcrypt.hash();
  */
-app.get('/login', async (req, res) => {
+
+
+
+/*app.get('/login', loginRouter, async (req, res) => {
   // not the async before (req, res) since bcrpyt is async. this also allows us to use await before bcrypt to get the hash before proceeding.
   // first get user id from the database, this will replace the BCRYPT_TEST_ID value
 
@@ -55,16 +63,20 @@ app.get('/login', async (req, res) => {
   // then set the cookie value to the hashed value
   req.session.user = hashed;
   res.status(200).json('Cookie made');
-});
+});*/
+
+app.use('/login', loginRouter);
 
 /** This manually deletes the session and therefore the cookie
  *
  */
-app.get('/logout', (req, res) => {
-  // deletes the session for the user and therefore the cookie by setting req.session to null
+
+app.use('/logout', (req, res) => {
   req.session = null;
   res.status(200).json('Cookie deleted');
-});
+})
+//app.use('/logout', logoutRouter);
+
 
 /**
  * This should obtain the hashed value of the cookie which will match the hashed value in the User table for the hashed user id column
@@ -82,7 +94,7 @@ app.get('/comparecookie', async (req, res) => {
   let hashedId = req.session.user;
 
   // obtain a boolean for whether the user id and hashed user id match
-  const valid = await bcrypt.compare(BCRYPT_TEST_ID, hashedId);
+  const valid = await bcrypt.compare('11', hashedId);
 
   // match not found, the user is not validated
   if (!valid) {
@@ -98,6 +110,7 @@ app.get('/comparecookie', async (req, res) => {
  */
 app.use('/wardrobe', wardrobeRouter);
 app.use('/outfits', outfitsRouter);
+app.use('/users', userRouter)
 
 //catch-all error handler for unknown routes
 app.use('*', (req, res) => res.status(404).send('not working'));

@@ -20,7 +20,10 @@ import AddRemoveOutfit from './AddRemoveOutfit';
 
 export const GlobalContext = React.createContext({}); // To pass state to children
 function MultipleItemsDisplay(props) {
-  const [urls, handleUrls] = useState(props.urls); // State update
+  // State update with passed down urls of all items 
+  // in category that user owns
+  const [urls, handleUrls] = useState(props.urls);
+  const [ids, handleIDs] = useState(props.ids);
 
   let imgArray = [];
 
@@ -28,12 +31,21 @@ function MultipleItemsDisplay(props) {
     imgArray.push(
       <div>
         <img src={props.urls[i]} width="120px" height="120px"></img>
-        <AddRemoveOutfit url={props.urls[i]}></AddRemoveOutfit>
+        {/* instantiate AddRemoveOutfit button. Need to pass the url,
+         the item_id, category and the method to alter the parent state*/}
+        <AddRemoveOutfit category = {props.category} url={props.urls[i]} id = {props.ids[i]}
+        draft = {props.draft} changeDraft = {props.changeDraft}
+        ></AddRemoveOutfit>
       </div>
     );
   }
 
-  return <div>{imgArray}</div>;
+  return (
+    <div>
+      {/* instantiate the array of images*/}
+      {imgArray}
+    </div>
+  )
 }
 
 export default MultipleItemsDisplay;
